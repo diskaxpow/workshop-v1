@@ -29,6 +29,34 @@ git push
 git pull origin main
 ```
 
+## CARA MEMBUAT BRANCH SENDIRI
+#### 1. Cek branch yang tersedia
+```
+git branch
+```
+#### 2. Buat branch baru
+```
+git branch nama-branch-kamu
+```
+EXAMPLE
+```
+git branch feature/login-page
+```
+
+#### 3. Pindah ke branch tersebut
+```
+git checkout nama-branch-kamu
+```
+#### 4. Push branch ke GitHub (pertama kali)
+```
+git push -u origin nama-branch-kamu
+```
+
+#### 5. Push berikutnya (setelah branch terhubung)
+```
+git push
+```
+
 ## 📝 4. Tips Penting!!!
 
 ### 1. Selalu lakukan git pull sebelum mulai coding.
@@ -40,8 +68,6 @@ git pull origin main
 ```
 git branch
 ```
-
-
 ### 4. Jika terjadi conflict, selesaikan lalu commit kembali:
 ```
 git add .
