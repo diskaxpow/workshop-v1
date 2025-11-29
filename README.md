@@ -1,16 +1,55 @@
-# React + Vite
+# TATA CARA PUSH & PULL GITHUB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dokumen ini berisi langkah-langkah dasar untuk melakukan git push dan git pull pada repository GitHub, khususnya untuk penggunaan pertama kali.
 
-Currently, two official plugins are available:
+## INITIATION AND PUSH
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Jika proyek belum memiliki Git repository, lakukan:
 
-## React Compiler
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/USERNAME/NAMA-REPO.git
+git push -u origin main
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## PUSH
 
-## Expanding the ESLint configuration
+```
+git add .
+git commit -m "Update project"
+git push
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## PULL
+
+```
+git pull origin main
+```
+
+## 📝 4. Tips Penting!!!
+
+### 1. Selalu lakukan git pull sebelum mulai coding.
+
+### 2. Gunakan commit message yang jelas.
+
+### 3. Pastikan posisi branch sesuai sebelum push:
+
+```
+git branch
+```
+
+
+### 4. Jika terjadi conflict, selesaikan lalu commit kembali:
+```
+git add .
+git commit -m "Fix merge conflict"
+git push
+```
+
+## 🎉 Selesai!
+
+README ini mencakup cara dasar menggunakan Git (push & pull) untuk pertama kali.
+Silakan sesuaikan URL repository dan branch sesuai kebutuhan proyek kamu.
