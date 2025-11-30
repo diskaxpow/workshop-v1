@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const menu = () => [
     { name: "Dashboard", icon: Home, path: "/home" },
-    { name: "Users", icon: User, path: "/profile" },
+    { name: "Users", icon: User, path: "/users" },
     { name: "Settings", icon: Settings, path: "/setting" },
     { name: "Notifications", icon: Bell, path: "/notification" },
     { name: "Files", icon: Folder, path: "/file" },
