@@ -26,11 +26,11 @@ const MainSidebar = ({ collapsed, setCollapsed }) => {
             <div className="flex items-center justify-between px-4 py-4 border-b">
                 <span
                     className={cn(
-                        "font-bold text-lg transition-all duration-300 text-primary",
+                        "font-bold transition-all duration-300 text-primary text-2xl",
                         collapsed ? "hidden" : "inline-block"
                     )}
                 >
-                    Workshop React
+                    CMS Webides
                 </span>
                 <button
                     onClick={() => setCollapsed((prev) => !prev)}
@@ -55,13 +55,13 @@ const MainSidebar = ({ collapsed, setCollapsed }) => {
                                     "flex items-center gap-3 px-4 py-2 rounded-md transition-colors",
                                     collapsed ? "justify-center" : "",
                                     location.pathname === item.path 
-                                        ? "bg-primary text-primary-foreground font-semibold" 
-                                        : "hover:bg-primary/10 hover:text-primary"
+                                        ? "bg-primary text-white font-semibold" 
+                                        : "hover:bg-primary/10 hover:text-primary text-gray-700"
                                 )}
                             >
                                 <item.icon className={cn(
                                     "w-5 h-5 transition-colors",
-                                    location.pathname === item.path ? "text-primary-foreground" : "text-primary"
+                                    location.pathname === item.path ? "text-white" : "text-gray-700"
                                 )} />
                                 <span className={cn("transition-all duration-300 ", collapsed ? "hidden" : "inline-block")}>{item.name}</span>
                             </Link>

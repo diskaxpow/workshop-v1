@@ -9,7 +9,7 @@ const Home = () => {
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-4">Home Page</h1>
       <p className="mb-6">Selamat datang di halaman utama</p>
-      <Button onClick={() => navigate('/about')}>
+      <Button onClick={() => navigate('/about')} className="text-white">
         Pergi ke About
       </Button>
     </div>
