@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import React, { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { getTodos } from "@/services/userApi";
+import { userApi } from "@/services/api";
 import { toast } from "sonner";
 import UserDialog from "@/components/widgets/userDialog";
 
@@ -16,10 +16,11 @@ const Users = () => {
 
   const fetchUsers = () => {
     setLoading(true);
-    getTodos()
+    userApi
+      .getUsers()
       .then((res) => {
         setTimeout(() => {
-          setUsers(res);
+          setUsers(res.data || res);
           console.log("datanya disini", res);
           setLoading(false);
           toast.success("Users fetched successfully", { duration: 3000 });
@@ -38,55 +39,52 @@ const Users = () => {
     setSelectedUser(null);
     setIsDialogOpen(true);
   };
-    // Fungsi untuk handle create user baru (local state)
-  const handleCreateUser = (newUserData) => {
-    // Generate ID baru (ambil ID tertinggi + 1)
-    const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
-    const newUser = { ...newUserData, id: newId };
-    
-    // Tambahkan user baru ke state
-    setUsers([newUser , ...users]);
-    toast.success("User berhasil ditambahkan!");
+
+  // Fungsi untuk handle create user baru
+  const handleCreateUser = async (newUserData) => {
+    try {
+      const response = await userApi.createUser(newUserData);
+      // Refresh data dari server
+      fetchUsers();
+      toast.success("User berhasil ditambahkan!");
+    } catch (error) {
+      toast.error("Gagal menambahkan user");
+      console.error(error);
+    }
   };
 
-
-    const handleEdit = (user) => {
+  const handleEdit = (user) => {
     setDialogMode("edit");
     setSelectedUser(user);
     setIsDialogOpen(true);
   };
 
-   // Fungsi untuk handle update user (local state)
-   const handleUpdateUser = (userId, updatedData) => {
-    // Step 1: Loop semua user
-    const updatedUsers = users.map((user) => {
-      // Step 2: Cek apakah ini user yang mau diupdate?
-      if (user.id === userId) {
-        // Kalau iya, ganti datanya dengan data baru
-        return {
-          ...user, // Ambil semua data user lama
-          ...updatedData // Timpa dengan data baru
-        };
-      }
-      // Kalau bukan, kembalikan user seperti semula (tidak berubah)
-      return user;
-    });
-    
-    // Step 3: Update state dengan data yang sudah diubah
-    setUsers(updatedUsers);
-    
-    // Step 4: Kasih tahu user bahwa data berhasil diupdate
-    toast.success("User berhasil diupdate!");
+  // Fungsi untuk handle update user
+  const handleUpdateUser = async (userId, updatedData) => {
+    try {
+      await userApi.updateUser(userId, updatedData);
+      // Refresh data dari server
+      fetchUsers();
+      toast.success("User berhasil diupdate!");
+    } catch (error) {
+      toast.error("Gagal mengupdate user");
+      console.error(error);
+    }
   };
 
-    const handleDelete = (user) => {
-    const updatedUsers = users.filter((u) => u.id !== user.id);
-    setUsers(updatedUsers);
-    toast.success(`User ${user.firstName} ${user.lastName} berhasil dihapus!`);
+  const handleDelete = async (user) => {
+    try {
+      await userApi.deleteUser(user.id);
+      // Refresh data dari server
+      fetchUsers();
+      toast.success(`User ${user.name} berhasil dihapus!`);
+    } catch (error) {
+      toast.error("Gagal menghapus user");
+      console.error(error);
+    }
   };
 
-
-   const handleDialogClose = () => {
+  const handleDialogClose = () => {
     setIsDialogOpen(false);
     setSelectedUser(null);
   };
@@ -113,8 +111,8 @@ const Users = () => {
         </div>
         <Card className="my-6">
           <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+            <div className="overflow-y-auto">
+              <table className="w-full p-0 text-sm">
                 <thead className="bg-gray-100 border-b">
                   <tr>
                     <th className="text-left p-4 font-semibold">First Name</th>
@@ -145,17 +143,26 @@ const Users = () => {
                         key={variable.id}
                         className="border-b hover:bg-gray-50"
                       >
-                        <td className="p-4">{variable.firstName}</td>
+                        <td className="p-4">{variable.name}</td>
                         <td className="p-4">{variable.email}</td>
                         <td className="p-4">{variable.phone}</td>
                         <td className="p-4">{variable.age}</td>
                         <td className="p-4">{variable.gender}</td>
                         <td className="p-4">{variable.role}</td>
                         <td className="p-4 text-center">
-                          <Button onClick={() => handleEdit(variable)} variant="outline" size="sm" className="mr-2">
+                          <Button
+                            onClick={() => handleEdit(variable)}
+                            variant="outline"
+                            size="sm"
+                            className="mr-2"
+                          >
                             Edit
                           </Button>
-                          <Button onClick={() => handleDelete(variable)} variant="destructive" size="sm">
+                          <Button
+                            onClick={() => handleDelete(variable)}
+                            variant="destructive"
+                            size="sm"
+                          >
                             Delete
                           </Button>
                         </td>

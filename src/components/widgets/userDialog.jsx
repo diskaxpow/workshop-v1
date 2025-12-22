@@ -8,9 +8,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const UserDialog = ({ isOpen, onClose, mode, userData, onCreateUser, onUpdateUser }) => {
+const UserDialog = ({
+  isOpen,
+  onClose,
+  mode,
+  userData,
+  onCreateUser,
+  onUpdateUser,
+}) => {
   // State untuk menyimpan data form
-  const [firstName, setFirstName] = useState("");
+  const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -24,8 +31,7 @@ const UserDialog = ({ isOpen, onClose, mode, userData, onCreateUser, onUpdateUse
     if (!isOpen) return;
     if (mode === "edit" && userData) {
       // Kalau mode edit, isi form dengan data user yang mau diedit
-      setFirstName(userData.firstName || "");
-      setLastName(userData.lastName || "");
+      setName(userData.name || "");
       setEmail(userData.email || "");
       setPhone(userData.phone || "");
       setAge(userData.age || "");
@@ -33,25 +39,23 @@ const UserDialog = ({ isOpen, onClose, mode, userData, onCreateUser, onUpdateUse
       setRole(userData.role || "");
     } else {
       // Kalau mode create, kosongkan semua form
-      setFirstName("");
-      setLastName("");
+      setName("");
       setEmail("");
       setPhone("");
       setAge("");
       setGender("");
       setRole("");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]); // Hanya depend pada isOpen, bukan mode dan userData
 
   // Fungsi untuk submit form
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Kumpulkan semua data form
     const formData = {
-      firstName,
-      lastName,
+      name,
       email,
       phone,
       age: parseInt(age),
@@ -65,7 +69,7 @@ const UserDialog = ({ isOpen, onClose, mode, userData, onCreateUser, onUpdateUse
     } else {
       onCreateUser(formData);
     }
-    
+
     onClose(); // Tutup dialog
   };
 
@@ -82,20 +86,8 @@ const UserDialog = ({ isOpen, onClose, mode, userData, onCreateUser, onUpdateUse
             <input
               type="text"
               className="w-full border rounded px-3 py-2"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Input Last Name */}
-          <div>
-            <label className="block text-sm font-medium mb-1">Last Name</label>
-            <input
-              type="text"
-              className="w-full border rounded px-3 py-2"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -155,26 +147,40 @@ const UserDialog = ({ isOpen, onClose, mode, userData, onCreateUser, onUpdateUse
                 <SelectItem value="lesbian">Lesbian (เลสเบี้ยน)</SelectItem>
                 <SelectItem value="kathoey">Kathoey (กะเทย)</SelectItem>
                 <SelectItem value="ladyboy">Ladyboy (เลดี้บอย)</SelectItem>
-                <SelectItem value="two_spirit">Two-Spirit (สองจิตสองใจ)</SelectItem>
+                <SelectItem value="two_spirit">
+                  Two-Spirit (สองจิตสองใจ)
+                </SelectItem>
                 <SelectItem value="bisexual">Bisexual (ไบเซ็กชวล)</SelectItem>
-                <SelectItem value="pansexual">Pansexual (แพนเซ็กชวล)</SelectItem>
+                <SelectItem value="pansexual">
+                  Pansexual (แพนเซ็กชวล)
+                </SelectItem>
                 <SelectItem value="asexual">Asexual (ไม่มีเพศ)</SelectItem>
-                <SelectItem value="intersex">Intersex (อินเตอร์เซ็กซ์)</SelectItem>
-                <SelectItem value="non_binary">Non-binary (ไม่ใช่ชายหรือหญิง)</SelectItem>
-                <SelectItem value="questioning">Questioning (กำลังค้นหา)</SelectItem>
+                <SelectItem value="intersex">
+                  Intersex (อินเตอร์เซ็กซ์)
+                </SelectItem>
+                <SelectItem value="non_binary">
+                  Non-binary (ไม่ใช่ชายหรือหญิง)
+                </SelectItem>
+                <SelectItem value="questioning">
+                  Questioning (กำลังค้นหา)
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
+          {/* Select Role */}
           <div>
             <label className="block text-sm font-medium mb-1">Role</label>
-            <input
-              type="text"
-              className="w-full border rounded px-3 py-2"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              required
-            />
+            <Select value={role} onValueChange={setRole}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Pilih Role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Admin">Admin</SelectItem>
+                <SelectItem value="User">User</SelectItem>
+                <SelectItem value="Manager">Manager</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Tombol Cancel dan Submit */}
