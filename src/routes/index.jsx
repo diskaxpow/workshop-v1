@@ -1,8 +1,9 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "@/pages/Home";
-import About from "@/pages/About";
-import Users from "@/pages/Users";
+import Profile from "@/pages/ProfileDesa";
+import Infografis from "@/pages/Infografis";
+import Berita from "@/pages/Berita";
 import Auth from "@/Auth/Auth";
 // import Profile from "@/pages/Profile";
 // import Setting from "@/pages/Setting";
@@ -34,18 +35,26 @@ const AppRouter = () => {
         }
       />
       <Route
-        path="/about"
+        path="/profile"
         element={
           <ProtectedRoute>
-            <About />
+            <Profile />
           </ProtectedRoute>
         }
       />
       <Route
-        path="/users"
+        path="/Infografis"
         element={
           <ProtectedRoute>
-            <Users />
+            <Infografis />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/Berita"
+        element={
+          <ProtectedRoute>
+            <Berita />
           </ProtectedRoute>
         }
       />

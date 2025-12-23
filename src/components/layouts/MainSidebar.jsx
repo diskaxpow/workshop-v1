@@ -5,10 +5,10 @@ import { cn } from "@/lib/utils";
 
 const menu = () => [
     { name: "Dashboard", icon: Home, path: "/home" },
-    { name: "Users", icon: User, path: "/users" },
-    { name: "Settings", icon: Settings, path: "/setting" },
+    { name: "Profil", icon: User, path: "/Profil" },
+    { name: "Infografis", icon: Settings, path: "/Infografis" },
     { name: "Notifications", icon: Bell, path: "/notification" },
-    { name: "Files", icon: Folder, path: "/file" },
+    { name: "Berita", icon: Folder, path: "/Berita" },
 ];
 
 const MainSidebar = ({ collapsed, setCollapsed }) => {
